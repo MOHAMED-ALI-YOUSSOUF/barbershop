@@ -87,13 +87,25 @@ export default defineType({
           name: 'street',
           title: 'Rue/Adresse complète',
           type: 'string',
-          validation: (Rule) => Rule.required(),
+          validation: (Rule) => Rule.custom((value, context) => {
+            const serviceType = (context.document as any)?.serviceType;
+            if (serviceType === 'home' && !value) {
+              return 'L\'adresse est requise pour les services à domicile';
+            }
+            return true;
+          }),
         }),
         defineField({
           name: 'zone',
           title: 'Quartier/Zone',
           type: 'string',
-          validation: (Rule) => Rule.required(),
+          validation: (Rule) => Rule.custom((value, context) => {
+            const serviceType = (context.document as any)?.serviceType;
+            if (serviceType === 'home' && !value) {
+              return 'La zone est requise pour les services à domicile';
+            }
+            return true;
+          }),
         }),
         defineField({
           name: 'city',
@@ -227,7 +239,13 @@ export default defineType({
     serviceType: 'serviceType',
   },
   prepare: (data: any) => {
-    const { customerName, serviceName, date, status, serviceType } = data as Booking;
+    const { customerName, serviceName, date, status, serviceType } = data as {
+      customerName?: string;
+      serviceName?: string;
+      date?: string;
+      status?: Booking['status'];
+      serviceType?: Booking['serviceType'];
+    };
 
     const statusEmoji: Record<Booking['status'], string> = {
       pending: '⏳',
@@ -237,13 +255,12 @@ export default defineType({
       'no-show': '🚫',
     };
 
-    const typeEmoji = serviceType === 'home' ? '🏠' : '🏢';
+    const typeEmoji = serviceType === 'home' ? '🏠' : serviceType === 'salon' ? '🏢' : '❓';
 
     return {
-      title: `${statusEmoji[status]} ${customerName} - ${serviceName}`,
-      subtitle: `${typeEmoji} ${new Date(date).toLocaleString('fr-FR')}`,
+      title: `${status ? statusEmoji[status] : '❓'} ${customerName || 'N/A'} - ${serviceName || 'N/A'}`,
+      subtitle: `${typeEmoji} ${date ? new Date(date).toLocaleString('fr-FR') : 'N/A'}`,
     };
   },
 }
-
 });

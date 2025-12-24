@@ -26,6 +26,6 @@ export function formatPhoneNumber(phone: string): string {
 }
 
 export function isValidPhoneNumber(phone: string): boolean {
-  const regex = /^\+?253\s?\d{2}\s?\d{2}\s?\d{2}\s?\d{2}$/
+  const regex = /^\+253\s?\d{2}\s?\d{2}\s?\d{2}\s?\d{2}$/
   return regex.test(phone)
 }
