@@ -90,10 +90,12 @@ export const getBookingByTokenQuery = groq`
       price,
       duration
     },
+    serviceName,
     customerName,
     customerPhone,
     customerEmail,
     date,
+    duration,
     serviceType,
     homeAddress,
     price,
@@ -103,6 +105,8 @@ export const getBookingByTokenQuery = groq`
     paymentMethod,
     paymentStatus,
     notes,
-    createdAt
+    adminNotes,  
+    createdAt,
+    updatedAt
   }
 `
