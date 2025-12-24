@@ -16,7 +16,8 @@ export default defineType({
       name: 'phone',
       title: 'Téléphone',
       type: 'string',
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) =>
+        Rule.required().regex(/^\+253\s?\d{2}\s?\d{2}\s?\d{2}\s?\d{2}$/),
     }),
     defineField({
       name: 'email',
