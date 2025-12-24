@@ -1,4 +1,4 @@
-// sanity/schemas/booking.ts
+// sanity/schemaTypes/booking.ts
 import { Booking } from '@/types';
 import { defineType, defineField } from 'sanity';
 
