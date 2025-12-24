@@ -45,6 +45,7 @@ export const getServicesByOrganizationQuery = groq`
   *[_type == "service" && organization._ref == $organizationId && isActive == true] {
     _id,
     name,
+    organization,
     description,
     price,
     duration,
@@ -52,7 +53,8 @@ export const getServicesByOrganizationQuery = groq`
     category,
     availableAtHome,
     homeServiceSurcharge,
-    isActive
+    isActive,
+    createdAt
   }
 `
 
