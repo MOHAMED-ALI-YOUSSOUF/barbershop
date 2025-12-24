@@ -11,6 +11,7 @@ export function generateCancellationToken(): string {
   return nanoid(32)
 }
 
+
 export function formatPrice(price: number): string {
   return `${price.toLocaleString('fr-FR')} DJF`
 }
