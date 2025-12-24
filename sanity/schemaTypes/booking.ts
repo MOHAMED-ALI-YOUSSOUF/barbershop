@@ -87,13 +87,25 @@ export default defineType({
           name: 'street',
           title: 'Rue/Adresse complète',
           type: 'string',
-          validation: (Rule) => Rule.required(),
+          validation: (Rule) => Rule.custom((value, context) => {
+            const serviceType = (context.document as any)?.serviceType;
+            if (serviceType === 'home' && !value) {
+              return 'L\'adresse est requise pour les services à domicile';
+            }
+            return true;
+          }),
         }),
         defineField({
           name: 'zone',
           title: 'Quartier/Zone',
           type: 'string',
-          validation: (Rule) => Rule.required(),
+          validation: (Rule) => Rule.custom((value, context) => {
+            const serviceType = (context.document as any)?.serviceType;
+            if (serviceType === 'home' && !value) {
+              return 'La zone est requise pour les services à domicile';
+            }
+            return true;
+          }),
         }),
         defineField({
           name: 'city',
